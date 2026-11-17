@@ -36,9 +36,28 @@
 @media(max-width:760px){.nav{padding:13px 14px;margin-top:8px}.quick{backdrop-filter:blur(15px) saturate(145%);-webkit-backdrop-filter:blur(15px) saturate(145%)}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 
+
+/* LIQUID GLASS: refração visual, bordas luminosas e movimento elástico */
+.nav,.quick,.filter,.btn-outline,.cartbar,.drawerhead{position:relative;isolation:isolate;overflow:hidden}
+.nav::before,.quick::before,.filter::before,.btn-outline::before,.cartbar::before,.drawerhead::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;border-radius:inherit;background:radial-gradient(130% 90% at 12% 0%,rgba(255,255,255,.72),transparent 38%),radial-gradient(100% 120% at 100% 100%,rgba(255,255,255,.28),transparent 45%),linear-gradient(135deg,rgba(255,255,255,.22),rgba(255,255,255,.025) 48%,rgba(255,255,255,.16));box-shadow:inset 0 1px 1px rgba(255,255,255,.8),inset 0 -1px 1px rgba(255,255,255,.18)}
+.nav::after,.quick::after,.filter::after,.btn-outline::after,.cartbar::after{content:"";position:absolute;inset:-45% -20%;z-index:-1;pointer-events:none;opacity:.5;background:linear-gradient(112deg,transparent 35%,rgba(255,255,255,.5) 48%,rgba(255,255,255,.08) 55%,transparent 67%);transform:translateX(-75%) rotate(8deg);transition:transform .9s cubic-bezier(.2,.8,.2,1),opacity .4s ease}
+.nav:hover::after,.quick:hover::after,.filter:hover::after,.btn-outline:hover::after,.cartbar:hover::after{transform:translateX(65%) rotate(8deg);opacity:.8}
+.nav{border:1px solid rgba(255,255,255,.3);box-shadow:inset 0 1px 0 rgba(255,255,255,.38),0 10px 32px rgba(0,0,0,.18)}
+.quick{border-color:rgba(255,255,255,.8);box-shadow:inset 0 1px 0 rgba(255,255,255,.95),inset 0 -1px 0 rgba(255,255,255,.35),0 12px 30px rgba(33,24,13,.1)}
+.quick:hover{transform:translateY(-7px) scale(1.018);box-shadow:inset 0 1px 0 #fff,0 20px 42px rgba(33,24,13,.17)}
+.filter{transition:transform .55s cubic-bezier(.2,1.4,.4,1),background .25s ease,box-shadow .3s ease}
+.filter:active,.add:active,.btn:active,.qty button:active{transform:scale(.91)}
+.product,.step,.add,.cartbar,.drawer{transition-timing-function:cubic-bezier(.2,1.35,.4,1)}
+.product{transition-duration:.55s}
+.product:hover{transform:translateY(-7px) scale(1.012)}
+.drawer{transition:transform .65s cubic-bezier(.2,1.25,.4,1)}
+.add:hover{transform:rotate(90deg) scale(1.12)}
+@media(prefers-reduced-motion:reduce){.nav::after,.quick::after,.filter::after,.btn-outline::after,.cartbar::after{display:none}}
+
 </style>
 </head>
 <body>
+<svg aria-hidden="true" width="0" height="0" style="position:absolute;pointer-events:none"><filter id="vt-liquid-glass" x="-20%" y="-20%" width="140%" height="140%"><feTurbulence type="fractalNoise" baseFrequency=".012 .025" numOctaves="2" seed="8" result="warp"/><feDisplacementMap in="SourceGraphic" in2="warp" scale="7" xChannelSelector="R" yChannelSelector="G"/></filter></svg>
 <div class="demo">VT Gastronomia · Demonstração de experiência digital para negócios gastronômicos</div>
 <header class="top">
  <div class="wrap">
@@ -66,7 +85,7 @@
  </div>
  <section class="section wrap" id="cardapio">
   <div class="sectionhead"><div><div class="kicker">Escolha o seu favorito</div><h2>Conheça as opções</h2></div><p>Encontre seu próximo favorito. Adicione ao carrinho e escolha como deseja finalizar.</p></div>
-  <div class="filters" id="filters"><button class="filter active" data-cat="todos">Todos</button><button class="filter" data-cat="burgers">Hambúrgueres</button><button class="filter" data-cat="combos">Combos</button><button class="filter" data-cat="porcoes">Porções</button><button class="filter" data-cat="bebidas">Bebidas</button></div>
+  <div class="filters" id="filters"><button class="filter active" data-cat="todos">Todos</button><button class="filter" data-cat="xis">Xis</button><button class="filter" data-cat="burgers">Hambúrgueres</button><button class="filter" data-cat="pratos">Pratos feitos</button><button class="filter" data-cat="combos">Combos</button><button class="filter" data-cat="porcoes">Porções</button><button class="filter" data-cat="doces">Doces</button><button class="filter" data-cat="bebidas">Bebidas</button></div>
   <div class="products" id="products"></div>
  </section>
  <section class="how" id="como-pedir"><div class="wrap howbox"><div><div class="kicker">Sem complicação</div><h2>Você escolhe.<br>A gente facilita.</h2><p>Consulte os produtos, monte seu pedido e selecione o canal que funciona melhor para você. Tudo começa por aqui.</p></div><div class="steps"><div class="step"><b>1</b><span><strong>Explore o cardápio</strong><small>Veja categorias, fotos e detalhes dos produtos.</small></span></div><div class="step"><b>2</b><span><strong>Monte seu pedido</strong><small>Adicione seus itens e confira o resumo.</small></span></div><div class="step"><b>3</b><span><strong>Escolha como pedir</strong><small>Continue pelo WhatsApp ou acesse outro canal.</small></span></div></div></div></section>
@@ -79,13 +98,33 @@
 const CONFIG={whatsapp:"",deliveryUrl:"",ifoodUrl:"",locationUrl:""};
 const money=n=>n.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
 const items=[
-{id:1,cat:"burgers",name:"Clássico da Casa",desc:"Pão macio, hambúrguer, queijo, alface, tomate e molho da casa.",price:26.90,img:"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80",tag:"Clássico"},
-{id:2,cat:"burgers",name:"Burger Especial",desc:"Hambúrguer suculento, cheddar cremoso e bacon crocante.",price:31.90,img:"https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80",tag:"Favorito"},
-{id:3,cat:"burgers",name:"Burger Duplo",desc:"Dois hambúrgueres, queijo derretido, cebola e molho especial.",price:36.90,img:"https://images.unsplash.com/photo-1571091718767-18b5b1457add?auto=format&fit=crop&w=800&q=80",tag:"Mais pedido"},
-{id:4,cat:"combos",name:"Combo da Casa",desc:"Hambúrguer clássico acompanhado de batata e bebida.",price:39.90,img:"https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80",tag:"Combo"},
-{id:5,cat:"porcoes",name:"Porção de Batatas",desc:"Porção de batatas douradas para compartilhar.",price:22.90,img:"https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=800&q=80",tag:"Porção"},
-{id:6,cat:"bebidas",name:"Bebida em Lata",desc:"Consulte os sabores disponíveis.",price:6.90,img:"https://images.unsplash.com/photo-1581636625402-29b2a704ef13?auto=format&fit=crop&w=800&q=80",tag:"Geladinho"}
+{id:1,cat:"xis",name:"Xis Salada",desc:"Pão prensado, bife, queijo, alface, tomate, milho e maionese da casa.",price:27.90,img:"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80",tag:"Clássico"},
+{id:2,cat:"xis",name:"Xis Bacon",desc:"Bife, queijo, bacon crocante, ovo, salada e molho especial.",price:32.90,img:"https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80",tag:"Mais pedido"},
+{id:3,cat:"xis",name:"Xis Coração",desc:"Coração na chapa, queijo, milho, ervilha, alface e maionese.",price:34.90,img:"https://images.unsplash.com/photo-1571091718767-18b5b1457add?auto=format&fit=crop&w=800&q=80",tag:"Da casa"},
+{id:4,cat:"xis",name:"Xis Frango",desc:"Frango desfiado, queijo derretido, tomate, alface e molho verde.",price:29.90,img:"https://images.unsplash.com/photo-1606755962773-d324e0a13086?auto=format&fit=crop&w=800&q=80",tag:"Leve"},
+{id:5,cat:"burgers",name:"Clássico da Casa",desc:"Pão brioche, hambúrguer artesanal, queijo, alface, tomate e molho da casa.",price:28.90,img:"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80",tag:"Clássico"},
+{id:6,cat:"burgers",name:"Burger Cheddar",desc:"Burger artesanal, cheddar cremoso, cebola caramelizada e brioche.",price:32.90,img:"https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80",tag:"Favorito"},
+{id:7,cat:"burgers",name:"Duplo Bacon",desc:"Dois burgers, queijo, bacon crocante e molho defumado.",price:38.90,img:"https://images.unsplash.com/photo-1571091718767-18b5b1457add?auto=format&fit=crop&w=800&q=80",tag:"Bem servido"},
+{id:8,cat:"burgers",name:"Chicken Crispy",desc:"Frango empanado crocante, queijo, alface e maionese temperada.",price:30.90,img:"https://images.unsplash.com/photo-1606755962773-d324e0a13086?auto=format&fit=crop&w=800&q=80",tag:"Crocante"},
+{id:9,cat:"pratos",name:"À la Minuta de Carne",desc:"Bife grelhado, arroz, feijão, ovo, fritas e salada.",price:34.90,img:"https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80",tag:"Prato clássico"},
+{id:10,cat:"pratos",name:"À la Minuta de Frango",desc:"Filé de frango grelhado, arroz, feijão, ovo, fritas e salada.",price:31.90,img:"https://images.unsplash.com/photo-1532550907401-a500c9a57435?auto=format&fit=crop&w=800&q=80",tag:"Almoço"},
+{id:11,cat:"pratos",name:"Frango à Parmegiana",desc:"Filé empanado, molho de tomate, queijo gratinado, arroz e fritas.",price:39.90,img:"https://images.unsplash.com/photo-1632778149955-e80f8ceca2e8?auto=format&fit=crop&w=800&q=80",tag:"Gratinado"},
+{id:12,cat:"pratos",name:"Bife Acebolado",desc:"Bife na chapa com cebola dourada, arroz, feijão e fritas.",price:36.90,img:"https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80",tag:"Da cozinha"},
+{id:13,cat:"combos",name:"Combo Burger",desc:"Clássico da casa, batata frita individual e refrigerante em lata.",price:42.90,img:"https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80",tag:"Combo"},
+{id:14,cat:"combos",name:"Combo Duplo",desc:"Dois burgers clássicos, duas batatas individuais e duas bebidas.",price:76.90,img:"https://images.unsplash.com/photo-1571091718767-18b5b1457add?auto=format&fit=crop&w=800&q=80",tag:"Para dividir"},
+{id:15,cat:"combos",name:"Combo Xis",desc:"Xis salada, fritas e bebida gelada para acompanhar.",price:39.90,img:"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80",tag:"Completo"},
+{id:16,cat:"porcoes",name:"Batata com Cheddar",desc:"Batatas crocantes cobertas com cheddar cremoso e bacon.",price:29.90,img:"https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=800&q=80",tag:"Para compartilhar"},
+{id:17,cat:"porcoes",name:"Polenta Frita",desc:"Porção de polenta dourada, sequinha e crocante.",price:22.90,img:"https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?auto=format&fit=crop&w=800&q=80",tag:"Porção"},
+{id:18,cat:"porcoes",name:"Anéis de Cebola",desc:"Anéis empanados e crocantes com molho especial.",price:25.90,img:"https://images.unsplash.com/photo-1639024471283-03518883512d?auto=format&fit=crop&w=800&q=80",tag:"Crocante"},
+{id:19,cat:"doces",name:"Brownie com Sorvete",desc:"Brownie de chocolate servido com uma bola de sorvete.",price:19.90,img:"https://images.unsplash.com/photo-1564355808539-22fda35bed7e?auto=format&fit=crop&w=800&q=80",tag:"Sobremesa"},
+{id:20,cat:"doces",name:"Petit Gâteau",desc:"Bolinho de chocolate com centro cremoso e sorvete.",price:22.90,img:"https://images.unsplash.com/photo-1624353365286-3f8d62b?auto=format&fit=crop&w=800&q=80",tag:"Especial"},
+{id:21,cat:"doces",name:"Cheesecake de Frutas",desc:"Fatia cremosa com cobertura de frutas vermelhas.",price:18.90,img:"https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=800&q=80",tag:"Doce"},
+{id:22,cat:"bebidas",name:"Suco Natural de Laranja",desc:"Suco preparado na hora, servido bem gelado.",price:10.90,img:"https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=800&q=80",tag:"Natural"},
+{id:23,cat:"bebidas",name:"Suco de Morango",desc:"Suco cremoso de morango, feito na hora.",price:12.90,img:"https://images.unsplash.com/photo-1553530666-ba11a7da3888?auto=format&fit=crop&w=800&q=80",tag:"Natural"},
+{id:24,cat:"bebidas",name:"Refrigerante Lata",desc:"Consulte os sabores disponíveis.",price:6.90,img:"https://images.unsplash.com/photo-1581636625402-29b2a704ef13?auto=format&fit=crop&w=800&q=80",tag:"Geladinho"},
+{id:25,cat:"bebidas",name:"Água Mineral",desc:"Com ou sem gás, 500 ml.",price:4.50,img:"https://images.unsplash.com/photo-1564419320461-6870880221ad?auto=format&fit=crop&w=800&q=80",tag:"500 ml"}
 ];
+
 const cart={};let category="todos";
 const products=document.getElementById("products");
 function renderProducts(){const filtered=items.filter(p=>category==="todos"||p.cat===category);products.innerHTML=filtered.map(p=>'<article class="product"><div class="product-image"><img loading="lazy" src="'+p.img+'" alt="'+p.name+'"><span class="tag">'+p.tag+'</span></div><div class="product-body"><div class="product-title">'+p.name+'</div><div class="product-desc">'+p.desc+'</div><div class="product-bottom"><span class="price">'+money(p.price)+'</span><button class="add" data-add="'+p.id+'" aria-label="Adicionar '+p.name+'">+</button></div></div></article>').join("")}
