@@ -42,9 +42,7 @@
 .nav::before,.quick::before,.filter::before,.btn-outline::before,.cartbar::before{filter:url(#vt-liquid-glass)}
 
 .nav,.quick,.filter,.btn-outline,.cartbar,.drawerhead{position:relative;isolation:isolate;overflow:hidden}
-.nav::before,.quick::before,.filter::before,.btn-outline::before,.cartbar::before,.drawerhead::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;border-radius:inherit;background:radial-gradient(130% 90% at 12% 0%,rgba(255,255,255,.72),transparent 38%),radial-gradient(100% 120% at 100% 100%,rgba(255,255,255,.28),transparent 45%),linear-gradient(135deg,rgba(255,255,255,.22),rgba(255,255,255,.025) 48%,rgba(255,255,255,.16));box-shadow:inset 0 1px 1px rgba(255,255,255,.8),inset 0 -1px 1px rgba(255,255,255,.18)}
-.nav::after,.quick::after,.filter::after,.btn-outline::after,.cartbar::after{content:"";position:absolute;inset:-45% -20%;z-index:-1;pointer-events:none;opacity:.5;background:linear-gradient(112deg,transparent 35%,rgba(255,255,255,.5) 48%,rgba(255,255,255,.08) 55%,transparent 67%);transform:translateX(-75%) rotate(8deg);transition:transform .9s cubic-bezier(.2,.8,.2,1),opacity .4s ease}
-.nav:hover::after,.quick:hover::after,.filter:hover::after,.btn-outline:hover::after,.cartbar:hover::after{transform:translateX(65%) rotate(8deg);opacity:.8}
+.nav::before,.quick::before,.filter::before,.btn-outline::before,.cartbar::before,.drawerhead::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;border-radius:inherit;background:linear-gradient(145deg,rgba(255,255,255,.24),rgba(255,255,255,.035) 55%,rgba(255,255,255,.12));box-shadow:inset 0 1px 1px rgba(255,255,255,.55),inset 0 -1px 1px rgba(255,255,255,.12)}
 .nav{border:1px solid rgba(255,255,255,.3);box-shadow:inset 0 1px 0 rgba(255,255,255,.38),0 10px 32px rgba(0,0,0,.18)}
 .quick{border-color:rgba(255,255,255,.8);box-shadow:inset 0 1px 0 rgba(255,255,255,.95),inset 0 -1px 0 rgba(255,255,255,.35),0 12px 30px rgba(33,24,13,.1)}
 .quick:hover{transform:translateY(-7px) scale(1.018);box-shadow:inset 0 1px 0 #fff,0 20px 42px rgba(33,24,13,.17)}
@@ -55,7 +53,44 @@
 .product:hover{transform:translateY(-7px) scale(1.012)}
 .drawer{transition:transform .65s cubic-bezier(.2,1.25,.4,1)}
 .add:hover{transform:rotate(90deg) scale(1.12)}
-@media(prefers-reduced-motion:reduce){.nav::after,.quick::after,.filter::after,.btn-outline::after,.cartbar::after{display:none}}
+
+
+
+/* REFINO VISUAL: hierarquia limpa, foco nos produtos e glass discreto */
+.section{padding-top:88px}
+.sectionhead{margin-bottom:34px}
+.section h2{font-size:clamp(48px,6vw,68px);letter-spacing:-.015em}
+.sectionhead p{font-size:14px;max-width:320px}
+.filters{gap:12px;padding:5px 0 24px}
+.filter{padding:14px 23px;font-size:13px;letter-spacing:.01em}
+.products{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.product{border-radius:22px;overflow:hidden}
+.product-image{height:300px;background:#ded2c0}
+.product-image img{transition:transform .5s ease;filter:saturate(1.13) contrast(1.04)}
+.product:hover .product-image img{transform:scale(1.035)}
+.product-body{padding:22px 23px 23px}
+.product-title{font-size:29px;letter-spacing:.01em}
+.product-desc{font-size:13px;line-height:1.65;min-height:44px;margin:9px 0 18px}
+.price{font-size:20px}
+.add{width:43px;height:43px;font-size:25px}
+.tag{font-size:10px;padding:8px 12px}
+.nav::before,.quick::before,.filter::before,.btn-outline::before,.cartbar::before,.drawerhead::before{opacity:.62}
+.quick{box-shadow:inset 0 1px 0 rgba(255,255,255,.75),0 8px 22px rgba(33,24,13,.07)}
+.quick:hover{transform:translateY(-2px);box-shadow:inset 0 1px 0 #fff,0 12px 26px rgba(33,24,13,.1)}
+.filter:hover{transform:translateY(-1px)}
+@media(max-width:760px){
+ .section{padding-top:64px}
+ .section h2{font-size:clamp(42px,11vw,54px)}
+ .sectionhead{margin-bottom:24px}
+ .filters{gap:8px;padding-bottom:18px}
+ .filter{padding:12px 17px;font-size:12px}
+ .products{grid-template-columns:1fr;gap:17px}
+ .product-image{height:260px}
+ .product-body{padding:18px}
+ .product-title{font-size:26px}
+ .product-desc{font-size:12px;min-height:0}
+ .price{font-size:18px}
+}
 
 </style>
 </head>
@@ -74,7 +109,7 @@
 </header>
 <section class="hero">
  <div class="wrap hero-grid">
-  <div><div class="eyebrow">Uma experiência digital para o seu negócio</div><h1>Seu pedido.<br><em>Do seu jeito.</em></h1><p>Explore o cardápio, escolha seus favoritos e encontre em um só lugar todas as formas de fazer seu pedido.</p><div class="hero-actions"><a class="btn btn-yellow" href="#cardapio">Explorar cardápio <span>↓</span></a><a class="btn btn-outline" href="#canais">Ver opções de pedido ↗</a></div></div>
+  <div><div class="eyebrow">Uma experiência digital para o seu negócio</div><h1>Seu pedido.<br><em>Do seu jeito.</em></h1></div>
   <div class="hero-photo"><img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1100&q=85" alt="Exemplo de produto do cardápio"><div class="photo-stamp">VT<br>GASTRONOMIA<span>• DEMONSTRAÇÃO •</span></div></div>
  </div>
 </section>
