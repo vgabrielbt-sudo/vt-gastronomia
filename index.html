@@ -38,6 +38,9 @@
 
 
 /* LIQUID GLASS: refração visual, bordas luminosas e movimento elástico */
+.nav,.quick,.filter,.btn-outline,.cartbar{backdrop-filter:url(#vt-liquid-glass) blur(1.2px) saturate(1.65);-webkit-backdrop-filter:blur(1.2px) saturate(1.65)}
+.nav::before,.quick::before,.filter::before,.btn-outline::before,.cartbar::before{filter:url(#vt-liquid-glass)}
+
 .nav,.quick,.filter,.btn-outline,.cartbar,.drawerhead{position:relative;isolation:isolate;overflow:hidden}
 .nav::before,.quick::before,.filter::before,.btn-outline::before,.cartbar::before,.drawerhead::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;border-radius:inherit;background:radial-gradient(130% 90% at 12% 0%,rgba(255,255,255,.72),transparent 38%),radial-gradient(100% 120% at 100% 100%,rgba(255,255,255,.28),transparent 45%),linear-gradient(135deg,rgba(255,255,255,.22),rgba(255,255,255,.025) 48%,rgba(255,255,255,.16));box-shadow:inset 0 1px 1px rgba(255,255,255,.8),inset 0 -1px 1px rgba(255,255,255,.18)}
 .nav::after,.quick::after,.filter::after,.btn-outline::after,.cartbar::after{content:"";position:absolute;inset:-45% -20%;z-index:-1;pointer-events:none;opacity:.5;background:linear-gradient(112deg,transparent 35%,rgba(255,255,255,.5) 48%,rgba(255,255,255,.08) 55%,transparent 67%);transform:translateX(-75%) rotate(8deg);transition:transform .9s cubic-bezier(.2,.8,.2,1),opacity .4s ease}
@@ -117,7 +120,7 @@ const items=[
 {id:17,cat:"porcoes",name:"Polenta Frita",desc:"Porção de polenta dourada, sequinha e crocante.",price:22.90,img:"https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?auto=format&fit=crop&w=800&q=80",tag:"Porção"},
 {id:18,cat:"porcoes",name:"Anéis de Cebola",desc:"Anéis empanados e crocantes com molho especial.",price:25.90,img:"https://images.unsplash.com/photo-1639024471283-03518883512d?auto=format&fit=crop&w=800&q=80",tag:"Crocante"},
 {id:19,cat:"doces",name:"Brownie com Sorvete",desc:"Brownie de chocolate servido com uma bola de sorvete.",price:19.90,img:"https://images.unsplash.com/photo-1564355808539-22fda35bed7e?auto=format&fit=crop&w=800&q=80",tag:"Sobremesa"},
-{id:20,cat:"doces",name:"Petit Gâteau",desc:"Bolinho de chocolate com centro cremoso e sorvete.",price:22.90,img:"https://images.unsplash.com/photo-1624353365286-3f8d62b?auto=format&fit=crop&w=800&q=80",tag:"Especial"},
+{id:20,cat:"doces",name:"Petit Gâteau",desc:"Bolinho de chocolate com centro cremoso e sorvete.",price:22.90,img:"https://images.unsplash.com/photo-1564355808539-22fda35bed7e?auto=format&fit=crop&w=800&q=80",tag:"Especial"},
 {id:21,cat:"doces",name:"Cheesecake de Frutas",desc:"Fatia cremosa com cobertura de frutas vermelhas.",price:18.90,img:"https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=800&q=80",tag:"Doce"},
 {id:22,cat:"bebidas",name:"Suco Natural de Laranja",desc:"Suco preparado na hora, servido bem gelado.",price:10.90,img:"https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=800&q=80",tag:"Natural"},
 {id:23,cat:"bebidas",name:"Suco de Morango",desc:"Suco cremoso de morango, feito na hora.",price:12.90,img:"https://images.unsplash.com/photo-1553530666-ba11a7da3888?auto=format&fit=crop&w=800&q=80",tag:"Natural"},
